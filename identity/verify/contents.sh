@@ -1,6 +1,6 @@
 #!/bin/sh
 file1=/etc/keystone/keystone-paste.ini
-sed -i 's/admin_token_auth/ /g' $file1 | grep -n '/^\[pipeline:public_api]' $file1
+sed -i 's/admin_token_auth/ /g' $file1
 unset OS_AUTH_URL OS_PASSWORD
 openstack --os-auth-url http://controller:35357/v3 \
   --os-project-domain-name default --os-user-domain-name default \
