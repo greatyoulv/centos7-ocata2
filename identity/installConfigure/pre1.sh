@@ -1,2 +1,2 @@
 #!/bin/sh
-mysql -uroot -e"CREATE DATABASE keystone;"
+mysql -uroot -ppass -e"CREATE DATABASE keystone;"
