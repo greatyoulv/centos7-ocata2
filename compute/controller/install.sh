@@ -22,8 +22,8 @@ sed -i '/^\[database\]/a connection = mysql+pymysql://nova:pass@controller/nova'
 
 
 ##[DEFAULT]
-sed -i '/^\#transport_url/{n;d}' $file1 |grep -n '^\#transport_url' $file1
-sed -n '3000,4000{/^\#transport_url/p}' $file1 |sed -i '/^\#transport_url/a transport_url = rabbit://openstack:pass@controller}' $file1
+sed -i '3020,3030{/^\#transport_url/{n;d}}' $file1 |grep -n '^\#transport_url' $file1
+sed -n '3020,3030{/^\#transport_url/p}' $file1 |sed -i '/^\#transport_url/a transport_url = rabbit://openstack:pass@controller}' $file1
 
 ##[api]
 sed -i '/^\[api\]/{n;d}' $file1 |grep -n '^\[api\]' $file1
@@ -37,21 +37,21 @@ sed -i '/^\[keystone_authtoken\]/a auth_uri = http://controller:5000\nauth_url =
 
 ##[DEFAULT]
 sed -i '/^\#my_ip/{n;d}' $file1 |grep -n '^\#my_ip' $file1
-sed -i '/^\#my_ip/a my_ip = 10.0.0.112' $file1 |grep -n '^my_ip' $file1
+sed -i '/^\#my_ip/a my_ip = 192.168.100.100' $file1 |grep -n '^my_ip' $file1
 
 
 
 ##[DEFAULT]
-sed -i '/^\#use_neutron/{n;d}' $file1 |grep -n '^\#use_neutron' $file1
-sed -i '/^\#use_neutron/a use_neutron = True' $file1 |grep -n '^use_neutron' $file1
-sed -i '/^\#firewall_driver/{n;d}' $file1 |grep -n '^\#firewall_driver' $file1
-sed -i '/^\#firewall_driver/a firewall_driver = nova.virt.firewall.NoopFirewallDriver' $file1 |grep -n '^firewall_driver' $file1
+sed -i '2300,2310{/^\#use_neutron/{n;d}}' $file1 |grep -n '^\#use_neutron' $file1
+sed -i '2300,2310{/^\#use_neutron/p}' $file1 |sed -i '/^\#use_neutron/a use_neutron = True' $file1
 
+sed -i '2460,2470{/^\#firewall_driver/{n;d}}' $file1 |grep -n '^\#firewall_driver' $file1
+sed -i '2460,2470{/^\#firewall_driver/p}' $file1 |sed -i '/^\#firewall_driver/a firewall_driver = nova.virt.firewall.NoopFirewallDriver' $file1
 
 
 ##[vnc]
-sed -i '/^\[vnc\]/{n;d}' $file1 |grep -n '^\[vnc\]' $file1
-sed -i '/^\[vnc\]/a enabled = true\nvncserver_listen = $my_ip\nvncserver_proxyclient_address = $my_ip' $file1 |grep -n '^\[vnc\]' $file1
+sed -i '9650,9660{/^\#enabled=true/{n;d}}' $file1 |grep -n '^\#enabled=true' $file1
+sed -i '9650,9660{/^\#enabled=true/p}' $file1 |sed -i '/^\#enabled=true/a enabled = true\nvncserver_listen = $my_ip\nvncserver_proxyclient_address = $my_ip' $file1 |grep -n '^\\' $file1
 
 
 
@@ -71,7 +71,7 @@ sed -i '/^\[oslo_concurrency\]/a lock_path = /var/lib/nova/tmp' $file1 |grep -n 
 sed -i '/^\[placement\]/{n;d}' $file1 |grep -n '^\[placement\]' $file1
 sed -i '/^\[placement\]/a os_region_name = RegionOne\nproject_domain_name = Default\nproject_name = service\nauth_type = password\nuser_domain_name = Default\nauth_url = http://controller:35357/v3\nusername = placement\npassword = pass' $file1 |grep -n '^\[placement\]' $file1
 
-echo "<Directory /usr/bin>
+echo -e "\n<Directory /usr/bin>
    <IfVersion >= 2.4>
       Require all granted
    </IfVersion>
@@ -80,3 +80,16 @@ echo "<Directory /usr/bin>
       Allow from all
    </IfVersion>
 </Directory>" >> $file2
+
+systemctl restart httpd
+su -s /bin/sh -c "nova-manage api_db sync" nova
+su -s /bin/sh -c "nova-manage cell_v2 map_cell0" nova
+su -s /bin/sh -c "nova-manage cell_v2 create_cell --name=cell1 --verbose" nova
+su -s /bin/sh -c "nova-manage db sync" nova
+nova-manage cell_v2 list_cells
+systemctl enable openstack-nova-api.service \
+  openstack-nova-consoleauth.service openstack-nova-scheduler.service \
+  openstack-nova-conductor.service openstack-nova-novncproxy.service
+systemctl start openstack-nova-api.service \
+  openstack-nova-consoleauth.service openstack-nova-scheduler.service \
+  openstack-nova-conductor.service openstack-nova-novncproxy.service
