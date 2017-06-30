@@ -17,3 +17,6 @@ export OS_PASSWORD=pass
 export OS_AUTH_URL=http://controller:5000/v3
 export OS_IDENTITY_API_VERSION=3
 export OS_IMAGE_API_VERSION=2" > /root/demo-openrc
+
+source /root/admin-openrc
+openstack token issue
