@@ -19,8 +19,9 @@ sed -i '/^\#core_plugin/a core_plugin = ml2' $file1 |grep -n '^core_plugin' $fil
 sed -i '/^\#service_plugins/{n;d}' $file1 |grep -n '^\#service_plugins' $file1
 sed -i '/^\#service_plugins/a service_plugins = router' $file1 |grep -n '^service_plugins' $file1
 
-sed -i '/^\#allow_overlapping_ips/{n;d}' $file1 |grep -n '^\#allow_overlapping_ips' $file1
-sed -i '/^\#allow_overlapping_ips/a allow_overlapping_ips = true' $file1 |grep -n '^allow_overlapping_ips' $file1
+sed -i '/^\# allow_overlapping_ips/{n;d}' $file1 |grep -n '^\# allow_overlapping_ips' $file1
+sed -i '/^\# allow_overlapping_ips/a allow_overlapping_ips = true' $file1 |grep -n '^allow_overlapping_ips' $file1
+
 
 ##[DEFAULT]
 sed -i '570,580{/^\#transport_url/{n;d}}' $file1 |grep -n '^\#transport_url' $file1
@@ -43,7 +44,7 @@ sed -i '/^\#notify_nova_on_port_data_changes/a notify_nova_on_port_data_changes 
 
 ##[nova]
 sed -i '/^\[nova\]/{n;d}' $file1 |grep -n '^\[nova\]' $file1
-sed -i '/^\\[nova\]/a auth_url = http://controller:35357\nauth_type = password\nproject_domain_name = default\nuser_domain_name = default\nregion_name = RegionOne\nproject_name = service\nusername = nova\npassword = pass' $file1 |grep -n '^\[nova\]' $file1
+sed -i '/^\[nova\]/a auth_url = http://controller:35357\nauth_type = password\nproject_domain_name = default\nuser_domain_name = default\nregion_name = RegionOne\nproject_name = service\nusername = nova\npassword = pass' $file1 |grep -n '^\[nova\]' $file1
 
 ##[oslo_concurrency]
 sed -i '/^\[oslo_concurrency\]/{n;d}' $file1 |grep -n '^\[oslo_concurrency\]' $file1
