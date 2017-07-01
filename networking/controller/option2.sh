@@ -24,7 +24,7 @@ sed -i '/^\#allow_overlapping_ips/a allow_overlapping_ips = true' $file1 |grep -
 
 ##[DEFAULT]
 sed -i '570,580{/^\#transport_url/{n;d}}' $file1 |grep -n '^\#transport_url' $file1
-sed -n '570,580{/^\#transport_url/p}' $file1 |sed -i '/^\#transport_url/a transport_url = rabbit://openstack:pass@controller}' $file1
+sed -n '570,580{/^\#transport_url/p}' $file1 |sed -i '/^\#transport_url/a transport_url = rabbit://openstack:pass@controller' $file1
 
 ##[Default]
 sed -i '/^\#auth_strategy/{n;d}' $file1 |grep -n '^\#auth_strategy' $file1
