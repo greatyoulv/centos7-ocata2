@@ -23,7 +23,7 @@ sed -i '/^\[database\]/a connection = mysql+pymysql://nova:pass@controller/nova'
 
 ##[DEFAULT]
 sed -i '3020,3030{/^\#transport_url/{n;d}}' $file1 |grep -n '^\#transport_url' $file1
-sed -n '3020,3030{/^\#transport_url/p}' $file1 |sed -i '/^\#transport_url/a transport_url = rabbit://openstack:pass@controller}' $file1
+sed -n '3020,3030{/^\#transport_url/p}' $file1 |sed -i '/^\#transport_url/a transport_url = rabbit://openstack:pass@controller' $file1
 
 ##[api]
 sed -i '/^\[api\]/{n;d}' $file1 |grep -n '^\[api\]' $file1
