@@ -37,8 +37,8 @@ sed -i '2460,2470{/^\#firewall_driver/p}' $file1 |sed -i '/^\#firewall_driver/a 
 
 
 ##[vnc]
-sed -i '9650,9680{/^vncserver_proxyclient_address/{n;d}}' $file1 |grep -n '^vncserver_proxyclient_address' $file1
-sed -i '9650,9680{/^vncserver_proxyclient_address/p}' $file1 |sed -i '/^vncserver_proxyclient_address/a novncproxy_base_url = http://controller:6080/vnc_auto.html' $file1
+sed -i '9650,9700{/^vncserver_proxyclient_address/{n;d}}' $file1 |grep -n '^vncserver_proxyclient_address' $file1
+sed -i '9650,9700{/^vncserver_proxyclient_address/p}' $file1 |sed -i '/^vncserver_proxyclient_address/a novncproxy_base_url = http://controller:6080/vnc_auto.html' $file1
 
 
 
