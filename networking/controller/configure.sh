@@ -1,5 +1,5 @@
 #!/bin/sh
-file1='enable_isolated_metadata = true'
+file1='/etc/neutron/metadata_agent.ini'
 file2='/etc/nova/nova.conf'
 
 ##[Default]
