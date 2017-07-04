@@ -8,7 +8,7 @@ sed -i '/^\#OPENSTACK_HOST/a OPENSTACK_HOST = \"controller\"' $file1 |grep -n '^
 
 ##ALLOWED_HOSTS
 sed -i 's/^ALLOWED_HOST/\#ALLOWED_HOST/g' $file1
-sed -i '/^\#ALLOWED_HOST/a ALLOWED_HOST = \['*'\]' $file1 |grep -n '^ALLOWED_HOST' $file1
+sed -i "/^\#ALLOWED_HOSTS/a ALLOWED_HOSTS = \['*'\]" $file1 |grep -n '^ALLOWED_HOSTS' $file1
 
 ##SESSION_ENGINE
 sed -i "N;/^CACHES/iSESSION_ENGINE = 'django.contrib.sessions.backends.cache'" $file1
@@ -17,15 +17,15 @@ sed -i "N;/^CACHES/iSESSION_ENGINE = 'django.contrib.sessions.backends.cache'" $
 sed -i "s/'BACKEND': 'django.core.cache.backends.locmem.LocMemCache'/'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache'/" $file1
 
 #sed -i '145,155{/BACKEND/{n;d}}' $file1 |grep -n 'BACKEND' $file1
-sed -n '145,155{/BACKEND/p}' $file1 |sed -i "/BACKEND/a	'LOCATION': 'controller:11211'," $file1
+sed -i "145,155{/BACKEND/a	'LOCATION': 'controller:11211',}" $file1
 
-sed -i '180,190s/v2.0/v3/' $file1
+sed -i '160,170s/v2.0/v3/' $file1
 
 
 sed -i '/^\#OPENSTACK_KEYSTONE_MULTIDOMAIN_SUPPORT/{n;d}' $file1
 sed -i '/^\#OPENSTACK_KEYSTONE_MULTIDOMAIN_SUPPORT/a OPENSTACK_KEYSTONE_MULTIDOMAIN_SUPPORT = True' $file1 |grep -n '^OPENSTACK_KEYSTONE_MULTIDOMAIN_SUPPORT' $file1
 
-echo '\nOPENSTACK_API_VERSIONS = {
+echo 'OPENSTACK_API_VERSIONS = {
     "identity": 3,
     "image": 2,
     "volume": 2,
