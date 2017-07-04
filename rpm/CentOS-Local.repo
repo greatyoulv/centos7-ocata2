@@ -1,0 +1,9 @@
+# CentOS-OpenStack-ocata.repo
+
+[centos-openstack-ocata]
+name=CentOS-7 - OpenStack ocata
+baseurl=file:///home/7/
+gpgcheck=0
+enabled=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-Cloud
+exclude=sip,PyQt4
