@@ -61,7 +61,7 @@ sed -i '/^\[oslo_concurrency\]/a lock_path = /var/lib/nova/tmp' $file1 |grep -n 
 
 ##[libvirt]
 sed -i '/^\#virt_type/{n;d}' $file1 |grep -n '^\#virt_type' $file1
-sed -i '/^\#virt_type/a virt_type = qemu' $file1 |grep -n '^\virt_type' $file1
+sed -i '/^\#virt_type/a virt_type = kvm' $file1 |grep -n '^\virt_type' $file1
 
 ##[scheduler]
 sed -i '/^\#discover_hosts_in_cells_interval/{n;d}' $file1 |grep -n '^\#discover_hosts_in_cells_interval' $file1
