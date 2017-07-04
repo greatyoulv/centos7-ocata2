@@ -27,7 +27,7 @@ sed -i '/^\#my_ip/a my_ip = 10.0.0.112' $file1 |grep -n '^my_ip' $file1
 
 ##[oslo_concurrency]
 sed -i '/^\[oslo_concurrency\]/{n;d}' $file1 |grep -n '^\[oslo_concurrency\]' $file1
-sed -i '/^\[oslo_concurrency\]/a lock_path = /var/lib/nova/tmp' $file1 |grep -n '^\[oslo_concurrency\]' $file1
+sed -i '/^\[oslo_concurrency\]/a lock_path = /var/lib/cinder/tmp' $file1 |grep -n '^\[oslo_concurrency\]' $file1
 
 
 
